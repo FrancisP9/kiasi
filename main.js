@@ -327,6 +327,13 @@ function initScrollSequence() {
             // Direction universelle : deltaY > 0 => On descend (Next)
             let isScrollingDown = self.deltaY > 0;
 
+            // FIX MOBILE INVERSÉ : Si c'est du touch, on inverse la logique si besoin
+            // (Si l'utilisateur dit que c'est à l'envers sur mobile, on inverse ici)
+            const isTouch = self.event.type.startsWith("touch") || self.event.type.startsWith("pointer");
+            if (isTouch) {
+                isScrollingDown = !isScrollingDown;
+            }
+
             if (isScrollingDown) {
                 // NEXT STEP
                 if (currentStep === 0) gsap.to("#welcome-text", { opacity: 0, duration: 0.3 });
