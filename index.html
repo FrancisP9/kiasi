@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kiasi&Co | Studio Créatif Africain & Afropéen</title>
+    <meta
+      name="description"
+      content="Studio créatif basé à Bruxelles. Branding, Shopify et contenus pour les marques africaines et afropéennes."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Tenor+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-left">
+          <a href="#collections">Collections</a>
+          <a href="#experiences">Expériences</a>
+        </div>
+
+        <div class="nav-center">
+          <a href="#" class="logo-link">
+            <!-- Logo Texte si image non dispo, ou image -->
+            <span class="nav-logo-text"
+              >Kiasi<span class="gold">&</span>Co</span
+            >
+          </a>
+        </div>
+
+        <div class="nav-right">
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <div class="nav-icons">
+            <a href="#" aria-label="Account">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </a>
+            <a href="#" aria-label="Search">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-border"></div>
+    </nav>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+      <div class="loader-content">
+        <div class="logo-loader">KIASI&CO</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="percentage" id="percentage">0%</div>
+      </div>
+    </div>
+
+    <!-- HERO SECTION (PINNED) -->
+    <section id="hero-sequence">
+      <!-- Intro Video -->
+      <video id="intro-video" muted playsinline preload="auto">
+        <source src="videos/zoom.mp4" type="video/mp4" />
+      </video>
+
+      <canvas id="hero-canvas"></canvas>
+
+      <!-- Overlay Layers for Rotate Scroll -->
+      <div class="hero-overlay rotate-layer" id="rotate-text-1">
+        <div class="side-text">
+          <h3>Chaque marque a une histoire.</h3>
+        </div>
+      </div>
+      <div class="hero-overlay rotate-layer" id="rotate-text-2">
+        <div class="side-text">
+          <h3>La vôtre mérite d’être capturée sous son meilleur angle.</h3>
+        </div>
+      </div>
+      <div class="hero-overlay rotate-layer" id="rotate-text-3">
+        <div class="side-text">
+          <h3>Chez Kiasi&Co, nous révélons la valeur de votre identité.</h3>
+        </div>
+      </div>
+
+      <!-- Final Hero Content -->
+      <div class="hero-overlay final-layer" id="hero-final">
+        <div class="final-content">
+          <div class="label">Studio créatif basé à Bruxelles</div>
+          <h1 class="main-title">
+            Nous révélons la valeur<br />de votre marque.
+          </h1>
+          <p class="subtitle">
+            Branding, Shopify et contenus photo/vidéo pour les business
+            africains et afropéens.
+          </p>
+
+          <div class="dynamic-text-container">
+            <span class="dynamic-text"
+              >Un studio conçu pour les entrepreneurs africains.</span
+            >
+          </div>
+
+          <div class="cta-group">
+            <a href="#contact" class="btn btn-primary"
+              >Discuter de mon projet</a
+            >
+            <a href="#works" class="btn btn-secondary">Voir nos réalisations</a>
+          </div>
+        </div>
+        <div class="scroll-indicator">Scroll pour explorer ⌄</div>
+      </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content">
+      <!-- SECTION 1: MANIFESTO (Transition après le Hero) -->
+      <section id="manifesto" class="section-padding">
+        <div class="container">
+          <p class="manifesto-text">
+            Nous sommes le pont entre
+            <span class="serif">l'héritage culturel</span> et
+            <span class="serif">l'excellence digitale</span>. Un studio conçu
+            pour les marques qui refusent de choisir entre leur identité et les
+            standards internationaux.
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION 2: EXPERTISE (Liste Éditoriale) -->
+      <section id="expertise" class="section-padding bg-sand">
+        <div class="container">
+          <div class="section-header-row">
+            <span class="label-vertical">Expertises</span>
+            <div class="expertise-list">
+              <!-- Item 1 -->
+              <div class="expertise-item">
+                <div class="expertise-header">
+                  <span class="exp-num">01</span>
+                  <h3 class="exp-title">Brand Identity</h3>
+                  <span class="exp-icon">+</span>
+                </div>
+                <div class="expertise-body">
+                  <p>
+                    Direction Artistique, Logos, Chartes Graphiques, Packaging.
+                  </p>
+                </div>
+              </div>
+              <!-- Item 2 -->
+              <div class="expertise-item">
+                <div class="expertise-header">
+                  <span class="exp-num">02</span>
+                  <h3 class="exp-title">Digital Experience</h3>
+                  <span class="exp-icon">+</span>
+                </div>
+                <div class="expertise-body">
+                  <p>
+                    Sites Vitrines, E-commerce Shopify, UI/UX Design, Webflow.
+                  </p>
+                </div>
+              </div>
+              <!-- Item 3 -->
+              <div class="expertise-item">
+                <div class="expertise-header">
+                  <span class="exp-num">03</span>
+                  <h3 class="exp-title">Content Production</h3>
+                  <span class="exp-icon">+</span>
+                </div>
+                <div class="expertise-body">
+                  <p>
+                    Shooting Produit, Campagnes Vidéo, Social Media Content, 3D.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: SELECTED WORKS (Grandes Images) -->
+      <section id="works" class="section-padding">
+        <div class="container">
+          <div class="works-header">
+            <h2 class="big-title">
+              Selected<br /><span class="serif indent">Works</span>
+            </h2>
+            <a href="#" class="btn-link">Voir tous les projets</a>
+          </div>
+
+          <div class="works-gallery">
+            <!-- Project 1 -->
+            <article class="project-item">
+              <div class="project-img">
+                <div class="overlay"></div>
+                <img
+                  src="/images/robusca.jpg"
+                  alt="Robuesca Project"
+                  class="placeholder-img"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="project-info">
+                <h4>Robuesca</h4>
+                <p>Photo & Vidéo</p>
+              </div>
+            </article>
+
+            <!-- Project 2 -->
+            <article class="project-item offset-top">
+              <div class="project-img">
+                <div class="overlay"></div>
+                <img
+                  src="/images/cmj.jpg"
+                  alt="CMJ Beauty Project"
+                  class="placeholder-img"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="project-info">
+                <h4>CMJ Beauty</h4>
+                <p>E-commerce Experience</p>
+              </div>
+            </article>
+
+            <!-- Project 3 -->
+            <article class="project-item">
+              <div class="project-img">
+                <div class="overlay"></div>
+                <img
+                  src="/images/ellyon.jpg"
+                  alt="Elly & Co Project"
+                  class="placeholder-img"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="project-info">
+                <h4>Elly & Co</h4>
+                <p>Visual Identity</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: FOUNDERS (Editorial Portraits) -->
+      <section id="founders" class="section-padding">
+        <div class="container">
+          <div class="founders-header">
+            <span class="label-vertical">The Team</span>
+            <h2 class="big-title">
+              Creative<br /><span class="serif indent">Minds</span>
+            </h2>
+          </div>
+
+          <div class="founders-grid">
+            <!-- Founder 1 -->
+            <div class="founder-card">
+              <div class="founder-img">
+                <img
+                  src="/images/Jonathan.jpg"
+                  alt="Jonathan"
+                  class="placeholder-img"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="founder-info">
+                <h3>Jonathan</h3>
+                <span class="role">Creative Director</span>
+              </div>
+            </div>
+
+            <!-- Founder 2 -->
+            <div class="founder-card offset-down">
+              <div class="founder-img">
+                <img
+                  src="/images/Francis.jpg"
+                  alt="Francis"
+                  class="placeholder-img"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="founder-info">
+                <h3>Francis</h3>
+                <span class="role">Lead Tech</span>
+              </div>
+            </div>
+
+            <!-- Founder 3 -->
+            <div class="founder-card">
+              <div class="founder-img">
+                <!-- Using aesthetic placeholder for Sharon as per file list -->
+                <img
+                  src="/images/villa_side.jpg"
+                  alt="Sharon"
+                  class="placeholder-img"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="founder-info">
+                <h3>Sharon</h3>
+                <span class="role">Head of Strategy</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: CONTACT (Minimalist) -->
+      <section id="contact" class="section-padding bg-dark text-white">
+        <div class="container">
+          <div class="contact-layout">
+            <div class="contact-left">
+              <h2 class="big-title">
+                Let's build<br /><span class="serif text-gold">Legacies.</span>
+              </h2>
+            </div>
+            <div class="contact-right">
+              <p class="contact-intro">
+                Vous avez une vision ? Nous avons les outils pour la réaliser.
+                Discutons de votre prochain chapitre.
+              </p>
+
+              <form class="minimal-form">
+                <div class="input-group">
+                  <input type="text" placeholder="Votre nom" required />
+                </div>
+                <div class="input-group">
+                  <input type="email" placeholder="Votre email" required />
+                </div>
+                <div class="input-group">
+                  <select>
+                    <option value="" disabled selected>
+                      Je suis intéressé par...
+                    </option>
+                    <option value="branding">Branding</option>
+                    <option value="web">Site Web</option>
+                    <option value="content">Contenu</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn-submit">
+                  Démarrer le projet <span>&rarr;</span>
+                </button>
+              </form>
+
+              <div class="contact-details-footer">
+                <a href="mailto:hello@kiasi.co">hello@kiasi.co</a>
+                <span>Bruxelles, BE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="main-footer">
+        <div class="container">
+          <div class="footer-row">
+            <div class="f-left">Kiasi&Co © 2024</div>
+            <div class="f-right">
+              <a href="#">Instagram</a>
+              <a href="#">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

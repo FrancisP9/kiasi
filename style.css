@@ -1,0 +1,939 @@
+:root {
+    --color-black: #0a0a0a;
+    --color-dark: #121212;
+    --color-white: #ffffff;
+    --color-gold: #F5B75A;
+    --color-sand: #f2efe9;
+    --color-gray: #888888;
+    
+    --font-main: 'Manrope', sans-serif;
+    --font-display: 'Playfair Display', serif;
+    
+    --spacing-xs: 1rem;
+    --spacing-sm: 2rem;
+    --spacing-md: 4rem;
+    --spacing-lg: 8rem;
+    --spacing-xl: 12rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    font-family: var(--font-main);
+    font-weight: 300;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+body.no-scroll {
+    overflow: hidden;
+    height: 100vh;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-main); /* Using Manrope for titles as per "Modern Typo" */
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -0.02em;
+}
+
+p {
+    margin-bottom: 1.5rem;
+    color: var(--color-dark);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+ul {
+    list-style: none;
+}
+
+/* UTILS */
+.container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.section-padding {
+    padding: var(--spacing-lg) 0;
+}
+
+.section-label {
+    display: block;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    color: var(--color-gray);
+    font-weight: 500;
+}
+
+.gold-text {
+    color: var(--color-gold);
+}
+
+.dark-bg {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+.dark-bg p {
+    color: #ccc;
+}
+
+.btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-color: var(--color-black);
+}
+
+.dark-bg .btn-primary {
+    background-color: var(--color-white);
+    color: var(--color-black);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-gold);
+    border-color: var(--color-gold);
+    color: var(--color-black);
+}
+
+.btn-secondary {
+    border-color: var(--color-black);
+    background: transparent;
+}
+
+.dark-bg .btn-secondary {
+    border-color: var(--color-white);
+    color: var(--color-white);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+/* PRELOADER */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--color-black);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-white);
+}
+
+.loader-content {
+    text-align: center;
+    width: 300px;
+}
+
+.logo-loader {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.2em;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background-color: var(--color-gold);
+    transition: width 0.1s linear;
+}
+
+/* NAVBAR STYLE "SAFARI LODGE" */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 0 0 0; /* Padding top only, content centered */
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--color-white);
+    font-family: var(--font-main);
+    transition: all 0.4s ease;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Largeur contenue comme sur l'image */
+    margin: 0 auto;
+    padding: 0 2rem 1.5rem 2rem; /* Padding bottom before border */
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    gap: 3rem; /* Espacement large entre les liens */
+    align-items: center;
+    flex: 1;
+}
+
+.nav-right {
+    justify-content: flex-end;
+}
+
+.nav-center {
+    flex: 0 0 auto;
+    text-align: center;
+}
+
+/* Logo Texte Style "Minimalist Logo" */
+.nav-logo-text {
+    font-family: 'Tenor Sans', sans-serif; /* Police "Mode/Luxe" très épurée */
+    font-size: 1.8rem;
+    text-transform: uppercase; /* Tout en majuscules pour l'impact logo */
+    letter-spacing: 0.1em; /* Espacement large pour le côté premium */
+    color: #fff;
+    white-space: nowrap;
+}
+
+.nav-logo-text .gold {
+    color: var(--color-gold);
+    font-weight: 400; /* Tenor Sans n'a qu'un poids, mais on s'assure de ne pas forcer le bold */
+}
+
+.navbar a {
+    text-transform: uppercase;
+    font-size: 0.75rem; /* Très petit, style luxe */
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: var(--color-gold);
+}
+
+/* Icons */
+.nav-icons {
+    display: flex;
+    gap: 1.5rem;
+    margin-left: 1rem;
+    border-left: 1px solid rgba(255,255,255,0.2);
+    padding-left: 1.5rem;
+}
+
+.nav-icons svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.9;
+    transition: stroke 0.3s ease;
+}
+
+.nav-icons a:hover svg {
+    stroke: var(--color-gold);
+}
+
+/* Ligne fine en bas */
+.nav-border {
+    width: 100%;
+    max-width: 1200px;
+    height: 1px;
+    background: rgba(255,255,255,0.15); /* Très subtil */
+    margin: 0 auto;
+}
+
+/* Responsive Nav */
+@media (max-width: 900px) {
+    .nav-left, .nav-right {
+        display: none; /* Hamburger à faire si besoin, ici on cache pour focus desktop */
+    }
+    .nav-center {
+        margin: 0 auto;
+    }
+    .nav-container {
+        justify-content: center;
+    }
+}
+
+/* PRELOADER */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--color-black);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-white);
+}
+
+/* HERO SEQUENCE */
+#hero-sequence {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Fallback */
+    height: 100dvh; /* Mobile friendly */
+    min-height: 100vh; /* Ensure it never shrinks */
+    background-color: var(--color-black);
+    overflow: hidden;
+    z-index: 1; /* Lowered so content below is visible */
+    margin: 0;
+    padding: 0;
+}
+
+#intro-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 2;
+    opacity: 1;
+    display: block;
+}
+
+#hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Behind video initially */
+    display: block;
+}
+
+#main-content {
+    position: relative;
+    z-index: 2;
+    background-color: var(--color-white);
+}
+
+.scroll-spacer {
+    height: 0; /* No spacer needed with Observer approach */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Let clicks pass through except on interactive elements */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 0; /* Hidden by default */
+}
+
+/* Zoom Layer Text */
+.zoom-layer h2 {
+    color: var(--color-white);
+    font-size: clamp(2rem, 5vw, 4rem);
+    text-align: center;
+    max-width: 800px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    font-weight: 300;
+}
+
+/* Rotate Layer Text Minimalist */
+.rotate-layer {
+    align-items: flex-start; /* Align left */
+    padding-left: 10%;
+}
+
+.side-text h3 {
+    color: var(--color-white);
+    font-family: 'Manrope', sans-serif; /* Modern Minimalist */
+    font-weight: 300; /* Light weight */
+    font-size: clamp(2rem, 4vw, 3.5rem); /* Large but thin */
+    max-width: 700px;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Subtle shadow for readability without box */
+    
+    /* Removing old heavy styles */
+    background: transparent;
+    padding: 0;
+    backdrop-filter: none;
+    border-left: none;
+}
+
+/* Final Layer */
+.final-layer {
+    z-index: 20;
+    background: rgba(0,0,0,0.3); /* Slight overlay for readability */
+}
+
+.final-content {
+    text-align: center;
+    color: var(--color-white);
+    pointer-events: all;
+    max-width: 900px;
+    padding: 0 20px;
+}
+
+.label {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-gold);
+}
+
+.main-title {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #eee;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dynamic-text-container {
+    height: 30px; /* Fixed height for text slider */
+    margin-bottom: 3rem;
+    overflow: hidden;
+}
+
+.dynamic-text {
+    display: block;
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 1.3rem;
+    color: var(--color-gold);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.cta-group {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.cta-group .btn {
+    min-width: 200px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    font-size: 0.85rem;
+}
+
+.cta-group .btn-secondary {
+    color: var(--color-white);
+    border-color: var(--color-white);
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-white);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+    40% {transform: translateX(-50%) translateY(-10px);}
+    60% {transform: translateX(-50%) translateY(-5px);}
+}
+
+/* ========================================
+   SECTIONS - EDITORIAL DESIGN
+   ======================================== */
+
+.bg-sand { background-color: var(--color-sand); color: var(--color-black); }
+.bg-dark { background-color: var(--color-black); color: var(--color-white); }
+.text-white { color: var(--color-white); }
+.text-gold { color: var(--color-gold); }
+
+/* Typography Utils */
+.serif { font-family: var(--font-display); font-style: italic; }
+.indent { margin-left: 3rem; display: inline-block; }
+
+.big-title {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+}
+
+.label-vertical {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gray);
+    height: 100%;
+    display: block;
+}
+
+.btn-link {
+    display: inline-block;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 5px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* --- MANIFESTO SECTION --- */
+#manifesto {
+    padding: 10rem 0;
+    text-align: center;
+}
+
+.manifesto-text {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 300;
+    line-height: 1.4;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.manifesto-text span {
+    color: var(--color-gold);
+}
+
+/* --- EXPERTISE SECTION (Editorial List) --- */
+.section-header-row {
+    display: flex;
+    gap: 4rem;
+}
+
+@media (max-width: 768px) {
+    .section-header-row { flex-direction: column; gap: 2rem; }
+    .label-vertical { writing-mode: horizontal-tb; transform: none; margin-bottom: 1rem; }
+}
+
+.expertise-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.expertise-item {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 2rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.expertise-item:last-child {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.expertise-item:hover {
+    background: rgba(255,255,255,0.5);
+    padding-left: 1rem;
+}
+
+.expertise-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.exp-num {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-gray);
+    width: 40px;
+}
+
+.exp-title {
+    flex: 1;
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+.exp-icon {
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.expertise-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    padding-left: 40px;
+}
+
+.expertise-item:hover .expertise-body {
+    max-height: 100px;
+    margin-top: 1rem;
+}
+
+.expertise-body p {
+    font-size: 1rem;
+    color: var(--color-dark);
+}
+
+/* --- WORKS SECTION (Gallery Fun) --- */
+.works-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 2rem;
+}
+
+.works-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+@media (max-width: 900px) {
+    .works-gallery { grid-template-columns: 1fr; }
+}
+
+.project-item {
+    position: relative;
+    cursor: pointer;
+    perspective: 1000px; /* Pour la 3D */
+}
+
+.project-item.offset-top {
+    margin-top: 5rem;
+}
+
+.project-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 1.5rem;
+    border-radius: 12px; /* Plus doux */
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Effet rebond */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.placeholder-img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s ease;
+}
+
+/* Hover Effects Fun */
+.project-item:hover .project-img {
+    transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+    box-shadow: 20px 20px 60px rgba(0,0,0,0.2);
+    border: 2px solid var(--color-gold);
+}
+
+.project-item:hover .placeholder-img {
+    transform: scale(1.1) rotate(2deg); /* Zoom et twist */
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.2);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-item:hover .overlay { opacity: 1; }
+
+/* Petit badge fun au survol */
+.project-item .overlay::after {
+    content: 'Voir →';
+    background: var(--color-white);
+    color: var(--color-black);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    transform: scale(0);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.project-item:hover .overlay::after {
+    transform: scale(1);
+}
+
+.project-info h4 {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 1.4rem;
+    margin: 0;
+    transition: color 0.3s;
+}
+
+.project-item:hover .project-info h4 {
+    color: var(--color-gold);
+}
+
+.project-info p {
+    font-size: 0.9rem;
+    color: var(--color-gray);
+    margin: 0;
+}
+
+/* --- CONTACT (Minimal) --- */
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+}
+
+@media (max-width: 768px) {
+    .contact-layout { grid-template-columns: 1fr; }
+}
+
+.contact-intro {
+    font-size: 1.1rem;
+    color: #aaa;
+    margin-bottom: 3rem;
+}
+
+.minimal-form .input-group {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.minimal-form input, .minimal-form select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 1rem 0;
+    font-size: 1.2rem;
+}
+
+.minimal-form input::placeholder { color: #555; }
+.minimal-form select { color: #aaa; } /* Fix select placeholder color approx */
+
+.btn-submit {
+    background: white;
+    color: black;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background: var(--color-gold);
+}
+
+.contact-details-footer {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #666;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1rem;
+}
+
+.contact-details-footer a { color: white; }
+
+/* --- FOOTER (Minimal) --- */
+.main-footer {
+    padding: 2rem 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+}
+
+.footer-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.f-right a {
+    margin-left: 2rem;
+    color: #888;
+}
+
+.f-right a:hover { color: black; }
+
+/* ... (existing CSS) ... */
+
+/* --- FOUNDERS SECTION (Fun Portraits) --- */
+.founders-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 4rem;
+    margin-bottom: 6rem;
+}
+
+.founders-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+}
+
+@media (max-width: 900px) {
+    .founders-grid { grid-template-columns: 1fr; gap: 4rem; }
+    .founder-card.offset-down { margin-top: 0; }
+}
+
+.founder-card {
+    text-align: center;
+    opacity: 1;
+    transition: transform 0.3s ease;
+}
+
+.founder-card:hover {
+    transform: translateY(-15px);
+}
+
+.founder-card.offset-down {
+    margin-top: 8rem;
+}
+
+.founder-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    filter: grayscale(100%);
+    transition: all 0.5s ease;
+    border-radius: 100px 100px 0 0; /* Forme arche fun */
+    position: relative;
+}
+
+/* Effet couleur + ombre portée au survol */
+.founder-card:hover .founder-img {
+    filter: grayscale(0%);
+    box-shadow: 15px 15px 0 var(--color-gold); /* Ombre dure graphique */
+    border-radius: 12px; /* Retour au carré arrondi */
+}
+
+.placeholder-img {
+    transition: transform 0.5s ease;
+}
+
+.founder-card:hover .placeholder-img {
+    transform: scale(1.1);
+}
+
+.founder-info h3 {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+/* Soulignement animé */
+.founder-info h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--color-gold);
+    transition: width 0.3s ease;
+}
+
+.founder-card:hover .founder-info h3::after {
+    width: 100%;
+}
+
+.founder-info .role {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-gray);
+    display: block;
+    margin-top: 0.5rem;
+}
+.founder-card {
+    text-align: center;
+    opacity: 1; /* Force visible by default */
+}
