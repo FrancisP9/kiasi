@@ -40,7 +40,9 @@ gsap.ticker.add((time) => {
 gsap.ticker.lagSmoothing(0);
 
 // CONFIG
-const ROTATE_FRAME_COUNT = 80;
+const isMobile = window.innerWidth < 768;
+const ROTATE_FRAME_COUNT = isMobile ? 40 : 80; // Moins de frames sur mobile
+const FRAME_STEP = isMobile ? 2 : 1; // On saute 1 frame sur 2 si mobile
 const PATH_ROTATE = '/frames/rotate/rotate-';
 
 const canvas = document.getElementById("hero-canvas");
@@ -74,15 +76,24 @@ function preloadImages() {
     // Load Rotate Frames
     const loadPromises = [];
 
-    for (let i = 1; i <= ROTATE_FRAME_COUNT; i++) {
+    // Boucle adaptée : On charge i de 1 à 80, mais on saute si mobile
+    // Ou mieux : on charge de 1 à ROTATE_FRAME_COUNT et on mappe les noms de fichiers
+    
+    for (let i = 0; i < ROTATE_FRAME_COUNT; i++) {
         const img = new Image();
-        const frameNum = i.toString().padStart(4, '0');
+        
+        // Calcul du numéro de fichier réel (1 à 80)
+        // Si mobile (40 frames) : i=0 -> file=1, i=1 -> file=3, i=2 -> file=5...
+        // Formule : (i * FRAME_STEP) + 1
+        const fileIndex = (i * FRAME_STEP) + 1;
+        
+        const frameNum = fileIndex.toString().padStart(4, '0');
         img.src = `${PATH_ROTATE}${frameNum}.webp`;
         
         const p = img.decode().then(() => {
             updateProgress();
         }).catch((e) => {
-            console.warn(`Failed to decode frame ${i}`, e);
+            console.warn(`Failed to decode frame ${fileIndex}`, e);
             updateProgress();
         });
         loadPromises.push(p);
@@ -271,10 +282,9 @@ function initScrollSequence() {
         isAnimating = true;
         currentStep = index;
 
-        // Calculate Target Frame based on step
-        // 80 frames / 4 steps = 20 frames per step roughly
-        // Step 0=0, Step 1=20, Step 2=40, Step 3=60, Step 4=79
-        const targetFrame = Math.min(index * 20, ROTATE_FRAME_COUNT - 1);
+        // Calculate Target Frame based on step and total frames (responsive)
+        const framesPerStep = Math.floor(ROTATE_FRAME_COUNT / totalSteps);
+        const targetFrame = Math.min(index * framesPerStep, ROTATE_FRAME_COUNT - 1);
 
         // 1. Animate Canvas Frames
         gsap.to(appState, {
