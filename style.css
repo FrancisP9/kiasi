@@ -666,9 +666,16 @@ ul {
 .exp-title {
     flex: 1;
     font-family: 'Tenor Sans', sans-serif;
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 4vw, 2rem); /* Responsive font size */
     font-weight: 400;
     margin: 0;
+    line-height: 1.2;
+}
+
+@media (max-width: 400px) {
+    .exp-title {
+        font-size: 1.3rem; /* Encore plus petit sur très petit écran */
+    }
 }
 
 .exp-icon {
