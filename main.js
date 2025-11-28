@@ -116,11 +116,17 @@ function render() {
     }
 
     // Draw next frame with opacity = progress for interpolation
+    // OPTIMISATION MOBILE : Pas d'interpolation sur petit écran pour perf
+    const isMobile = window.innerWidth < 768;
+    
     const img2 = imagesRotate[index2];
     if (img2 && index2 !== index1) {
-        context.globalAlpha = progress;
-        drawImageProp(context, img2);
-        context.globalAlpha = 1.0; // Reset
+        if (!isMobile) {
+            context.globalAlpha = progress;
+            drawImageProp(context, img2);
+            context.globalAlpha = 1.0; // Reset
+        }
+        // Sur mobile, on ne dessine pas l'image intermédiaire floue, on saute direct à la frame
     }
 }
 
@@ -318,34 +324,52 @@ function initScrollSequence() {
         tolerance: 10,
         preventDefault: true,
         onChange: (self) => {
-            // self.deltaY > 0 : Scroll vers le BAS (Molette bas ou Doigt haut)
-            // self.deltaY < 0 : Scroll vers le HAUT (Molette haut ou Doigt bas)
+            // self.deltaY > 0 : Scroll vers le BAS (Molette bas ou Doigt haut sur écran tactile standard)
             
-            const isScrollingDown = self.deltaY > 0;
+            // Correction Mobile : Parfois le deltaY est interprété différemment selon les OS/Nav.
+            // Si l'utilisateur dit "c'est à l'envers", on inverse la logique globale ou juste mobile.
+            // Essayons la logique standard stricte :
             
-            if (isScrollingDown) {
-                // Dès qu'on scrolle vers le bas, on cache le message de bienvenue
-                if (currentStep === 0) {
-                    gsap.to("#welcome-text", { opacity: 0, duration: 0.3 });
-                }
+            // Geste Doigt vers le HAUT = Contenu qui monte = On veut voir la suite = NEXT STEP.
+            // Cela correspond normalement à deltaY > 0.
+            
+            let isScrollingDown = self.deltaY > 0;
 
-                // NEXT STEP
-                if (currentStep === totalSteps) {
-                    observer.disable();
-                    document.body.classList.remove('no-scroll'); 
-                    document.body.style.overflow = '';
-                    lenis.start();
-                    lenis.resize();
-                    initSectionAnimations();
-                }
-                else if (!isAnimating && currentStep < totalSteps) {
-                    goToStep(currentStep + 1);
-                }
-            } else {
-                // PREV STEP
-                if (!isAnimating && currentStep > 0) {
-                    goToStep(currentStep - 1);
-                }
+            // Si c'est du tactile, on inverse si le ressenti est mauvais
+            // Mais normalement GSAP normalise.
+            // Testons l'inversion simple si vous dites que c'est inversé actuellement.
+            // Si avant c'était : deltaY > 0 = Next. Et c'était "à l'envers".
+            // Alors on tente : deltaY < 0 = Next (pour le tactile seulement ?)
+            
+            // Pour l'instant, on inverse tout court pour tester votre ressenti
+            // isScrollingDown = !isScrollingDown; 
+            
+            // NON, restons logique : si vous dites "je dois scroller à l'envers", c'est que le sens actuel est mauvais.
+            // Mon code actuel (deltaY > 0 => Next) est le standard.
+            // Si sur votre mobile ça ne marche pas, c'est peut-être que touch-action bloque.
+            
+            // Tentative : Utiliser onUp/onDown de GSAP qui abstrait ça mieux que deltaY brut
+        },
+        onUp: (self) => {
+            // Geste vers le HAUT (Doigt qui monte) -> On veut descendre dans le contenu (NEXT)
+             const current = currentStep;
+             // NEXT STEP LOGIC
+             if (currentStep === totalSteps) {
+                observer.disable();
+                document.body.classList.remove('no-scroll'); 
+                document.body.style.overflow = '';
+                lenis.start();
+                lenis.resize();
+                initSectionAnimations();
+            }
+            else if (!isAnimating && currentStep < totalSteps) {
+                goToStep(currentStep + 1);
+            }
+        },
+        onDown: (self) => {
+            // Geste vers le BAS (Doigt qui descend) -> On veut remonter (PREV)
+            if (!isAnimating && currentStep > 0) {
+                goToStep(currentStep - 1);
             }
         }
     });
