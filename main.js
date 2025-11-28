@@ -41,8 +41,7 @@ gsap.ticker.lagSmoothing(0);
 
 // CONFIG
 const isMobile = window.innerWidth < 768;
-const ROTATE_FRAME_COUNT = isMobile ? 40 : 80; // Moins de frames sur mobile
-const FRAME_STEP = isMobile ? 2 : 1; // On saute 1 frame sur 2 si mobile
+const ROTATE_FRAME_COUNT = 80; // Retour à 80 frames pour fluidité maximale
 const PATH_ROTATE = '/frames/rotate/rotate-';
 
 const canvas = document.getElementById("hero-canvas");
@@ -76,24 +75,15 @@ function preloadImages() {
     // Load Rotate Frames
     const loadPromises = [];
 
-    // Boucle adaptée : On charge i de 1 à 80, mais on saute si mobile
-    // Ou mieux : on charge de 1 à ROTATE_FRAME_COUNT et on mappe les noms de fichiers
-    
-    for (let i = 0; i < ROTATE_FRAME_COUNT; i++) {
+    for (let i = 1; i <= ROTATE_FRAME_COUNT; i++) {
         const img = new Image();
-        
-        // Calcul du numéro de fichier réel (1 à 80)
-        // Si mobile (40 frames) : i=0 -> file=1, i=1 -> file=3, i=2 -> file=5...
-        // Formule : (i * FRAME_STEP) + 1
-        const fileIndex = (i * FRAME_STEP) + 1;
-        
-        const frameNum = fileIndex.toString().padStart(4, '0');
+        const frameNum = i.toString().padStart(4, '0');
         img.src = `${PATH_ROTATE}${frameNum}.webp`;
         
         const p = img.decode().then(() => {
             updateProgress();
         }).catch((e) => {
-            console.warn(`Failed to decode frame ${fileIndex}`, e);
+            console.warn(`Failed to decode frame ${i}`, e);
             updateProgress();
         });
         loadPromises.push(p);
@@ -127,17 +117,11 @@ function render() {
     }
 
     // Draw next frame with opacity = progress for interpolation
-    // OPTIMISATION MOBILE : Pas d'interpolation sur petit écran pour perf
-    const isMobile = window.innerWidth < 768;
-    
     const img2 = imagesRotate[index2];
     if (img2 && index2 !== index1) {
-        if (!isMobile) {
-            context.globalAlpha = progress;
-            drawImageProp(context, img2);
-            context.globalAlpha = 1.0; // Reset
-        }
-        // Sur mobile, on ne dessine pas l'image intermédiaire floue, on saute direct à la frame
+        context.globalAlpha = progress;
+        drawImageProp(context, img2);
+        context.globalAlpha = 1.0; // Reset
     }
 }
 
@@ -286,10 +270,13 @@ function initScrollSequence() {
         const framesPerStep = Math.floor(ROTATE_FRAME_COUNT / totalSteps);
         const targetFrame = Math.min(index * framesPerStep, ROTATE_FRAME_COUNT - 1);
 
+        // Réactivité Mobile : Animation plus rapide mais fluide
+        const animDuration = isMobile ? 1.0 : 1.5;
+
         // 1. Animate Canvas Frames
         gsap.to(appState, {
             currentFrame: targetFrame,
-            duration: 1.5, // Fixed duration for consistent feel
+            duration: animDuration,
             ease: "power2.inOut",
             onUpdate: render,
             onComplete: () => {
@@ -331,7 +318,7 @@ function initScrollSequence() {
         id: "hero-observer",
         target: window,
         type: "wheel,touch,pointer",
-        tolerance: 10,
+        tolerance: isMobile ? 5 : 10, // Plus sensible sur mobile
         preventDefault: true,
         onChange: (self) => {
             // Direction universelle : deltaY > 0 => On descend (Next)
