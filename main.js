@@ -324,6 +324,11 @@ function initScrollSequence() {
             const isScrollingDown = self.deltaY > 0;
             
             if (isScrollingDown) {
+                // Dès qu'on scrolle vers le bas, on cache le message de bienvenue
+                if (currentStep === 0) {
+                    gsap.to("#welcome-text", { opacity: 0, duration: 0.3 });
+                }
+
                 // NEXT STEP
                 if (currentStep === totalSteps) {
                     observer.disable();
@@ -447,6 +452,98 @@ function initSectionAnimations() {
             }
         );
     }
+
+    // 2. EXPERTISES : Scroll Float Effect (Letters floating up with stretch)
+    const expTitles = document.querySelectorAll(".exp-title");
+    expTitles.forEach(title => {
+        const chars = title.innerText.split("");
+        title.innerHTML = "";
+        
+        chars.forEach(char => {
+            const span = document.createElement("span");
+            span.innerText = char === " " ? "\u00A0" : char;
+            span.classList.add("char");
+            span.style.display = "inline-block";
+            span.style.willChange = "opacity, transform";
+            title.appendChild(span);
+        });
+        
+        const charElements = title.querySelectorAll(".char");
+        
+        gsap.fromTo(charElements, 
+            {
+                yPercent: 120,
+                scaleY: 2.3,
+                scaleX: 0.7,
+                transformOrigin: "50% 0%",
+                opacity: 0
+            },
+            {
+                duration: 1,
+                ease: "back.out(2)",
+                yPercent: 0,
+                scaleY: 1,
+                scaleX: 1,
+                opacity: 1,
+                stagger: 0.05,
+                scrollTrigger: {
+                    trigger: title,
+                    start: "top 90%",
+                    end: "top 60%",
+                    scrub: 1
+                }
+            }
+        );
+    });
+
+    // 3. WORKS : SCROLL STACK EFFECT (Advanced)
+    const cards = gsap.utils.toArray(".project-item");
+    
+    cards.forEach((card, i) => {
+        if (i === cards.length - 1) return; // Pas d'effet sur la dernière
+
+        gsap.to(card, {
+            scale: 0.85, 
+            opacity: 0, 
+            scrollTrigger: {
+                trigger: card,
+                start: "top 15%", // Doit matcher le top: 15vh du CSS .project-item
+                end: "bottom top", 
+                scrub: true,
+                // markers: true
+            }
+        });
+    });
+
+    // 4. FOUNDERS : Reveal (Disabled for stability)
+    /*
+    gsap.from(".founder-card", {
+        scrollTrigger: {
+            trigger: "#founders",
+            start: "top 75%"
+        },
+        y: 50,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 1,
+        ease: "power2.out"
+    });
+    */
+
+    // 5. CONTACT : Reveal (Disabled for stability)
+    /*
+    gsap.from(".contact-left, .contact-right", {
+        scrollTrigger: {
+            trigger: "#contact",
+            start: "top 75%"
+        },
+        y: 50,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 1,
+        ease: "power2.out"
+    });
+    */
 }
 
 // Global Modal Functions

@@ -1,4 +1,9 @@
 :root {
+    /* Palette Vivante Afrique : Terre rouge, Safran, Or, Indigo */
+    --gradient-afro: linear-gradient(135deg, #E63946 0%, #F4A261 25%, #E9C46A 50%, #2A9D8F 75%, #264653 100%);
+    --font-afro-modern: 'Syne', sans-serif;
+    --font-afro-classic: 'Cormorant Garamond', serif;
+
     --color-black: #0a0a0a;
     --color-dark: #121212;
     --color-white: #ffffff;
@@ -387,31 +392,42 @@ ul {
     opacity: 0; /* Hidden by default */
 }
 
-/* Welcome Layer */
+/* Welcome Layer Sexy */
 .welcome-layer {
-    z-index: 15; /* Au-dessus du canvas, sous le final layer */
+    z-index: 15;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.8s ease;
 }
 
 .welcome-title {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-family: 'Italiana', serif; /* TYPO LUXE BRANDÉ */
+    font-weight: 400;
+    font-size: clamp(3.5rem, 8vw, 7rem); /* Plus grand et fin */
     color: var(--color-white);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: -0.02em;
     margin-bottom: 1rem;
-    text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    line-height: 0.9;
+}
+
+.welcome-title .gold {
+    background: var(--gradient-afro);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-family: var(--font-afro-classic); /* Contraste serif */
+    font-style: italic;
+    font-weight: 600;
 }
 
 .welcome-subtitle {
-    font-family: var(--font-main);
-    font-size: 1rem;
-    color: rgba(255,255,255,0.8);
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    animation: bounce 2s infinite;
+    font-family: var(--font-afro-classic);
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #e0e0e0;
+    letter-spacing: 0.1em;
+    margin-top: 1rem;
 }
 
 /* Rotate Layer Text Minimalist */
@@ -421,20 +437,19 @@ ul {
 }
 
 .side-text h3 {
-    color: var(--color-white);
-    font-family: 'Manrope', sans-serif; /* Modern Minimalist */
-    font-weight: 300; /* Light weight */
-    font-size: clamp(2rem, 4vw, 3.5rem); /* Large but thin */
-    max-width: 700px;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Subtle shadow for readability without box */
-    
-    /* Removing old heavy styles */
-    background: transparent;
-    padding: 0;
-    backdrop-filter: none;
-    border-left: none;
+    color: #f2efe9;
+    font-family: 'Forum', serif; /* TYPO LUXE ROMAINE */
+    font-weight: 400; 
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Un peu plus grand car Forum est fine */
+    max-width: 800px;
+    line-height: 1.1;
+    letter-spacing: 0.05em; /* Espacé pour le luxe */
+    text-shadow: 0 4px 20px rgba(0,0,0,0.6); /* Ombre portée douce */
+    text-transform: uppercase; /* Majuscules pour l'impact */
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    opacity: 1;
 }
 
 /* Final Layer */
@@ -460,13 +475,13 @@ ul {
 }
 
 .main-title {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    font-weight: 400;
+    font-family: var(--font-afro-classic);
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    line-height: 0.9;
+    margin-bottom: 2rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: -0.03em;
 }
 
 .subtitle {
@@ -487,12 +502,15 @@ ul {
 }
 
 .dynamic-text {
-    display: block;
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 1.3rem;
-    color: var(--color-gold);
-    font-weight: 400;
+    font-family: var(--font-afro-modern);
+    font-weight: 700;
+    background: var(--gradient-afro);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 1.5rem;
     letter-spacing: 0.05em;
+    display: block;
     text-transform: uppercase;
 }
 
@@ -675,7 +693,7 @@ ul {
     color: var(--color-dark);
 }
 
-/* --- WORKS SECTION (Gallery Fun) --- */
+/* --- WORKS SECTION (Scroll Stack) --- */
 .works-header {
     display: flex;
     justify-content: space-between;
@@ -685,99 +703,117 @@ ul {
     padding-bottom: 2rem;
 }
 
+/* Container for stacked cards */
 .works-gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-}
-
-@media (max-width: 900px) {
-    .works-gallery { grid-template-columns: 1fr; }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-bottom: 10vh; /* Espace pour scroller */
 }
 
 .project-item {
-    position: relative;
-    cursor: pointer;
-    perspective: 1000px; /* Pour la 3D */
+    width: 100%;
+    max-width: 600px; /* Largeur de la carte */
+    margin-bottom: 10vh; /* Espace entre les cartes avant stack */
+    position: sticky;
+    top: 15vh; /* Position collante pour l'effet stack simple CSS (fallback) */
+    background: var(--color-white); /* Important pour cacher celle du dessous */
+    border-radius: 16px;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.1); /* Ombre vers le haut */
+    overflow: hidden;
+    transform-origin: center top; /* Pour l'animation scale */
 }
 
+/* Remove offset top hack */
 .project-item.offset-top {
-    margin-top: 5rem;
+    margin-top: 0;
 }
 
 .project-img {
     width: 100%;
-    aspect-ratio: 3/4;
+    /* aspect-ratio: 16/9;  Supprimé pour laisser l'image décider */
+    height: auto;
+    max-height: 70vh; /* Limite raisonnable */
     overflow: hidden;
     position: relative;
-    margin-bottom: 1.5rem;
-    border-radius: 12px; /* Plus doux */
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Effet rebond */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    margin-bottom: 0;
+    border-radius: 16px 16px 0 0;
+    display: flex; /* Pour centrer si besoin */
 }
 
-.placeholder-img {
+.project-img img {
     width: 100%;
     height: 100%;
-    transition: transform 0.7s ease;
+    object-fit: cover; /* Garde cover pour remplir le cadre défini par width */
+    display: block;
 }
 
-/* Hover Effects Fun */
-.project-item:hover .project-img {
-    transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
-    box-shadow: 20px 20px 60px rgba(0,0,0,0.2);
-    border: 2px solid var(--color-gold);
+.project-info {
+    padding: 2rem;
+    text-align: left;
+    background: var(--color-white);
 }
 
-.project-item:hover .placeholder-img {
-    transform: scale(1.1) rotate(2deg); /* Zoom et twist */
+/* Ajustements Responsive */
+@media (max-width: 900px) {
+    .project-item {
+        max-width: 90%;
+        top: 20vh;
+    }
 }
 
+/* --- WORKS HOVER EFFECTS (Restored) --- */
 .overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.2);
-    z-index: 1;
+    background: rgba(0,0,0,0.3);
+    z-index: 10;
     opacity: 0;
     transition: opacity 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    pointer-events: none; /* Laisse le clic passer à l'article */
 }
 
-.project-item:hover .overlay { opacity: 1; }
+.project-item:hover .overlay {
+    opacity: 1;
+}
 
-/* Petit badge fun au survol */
-.project-item .overlay::after {
-    content: 'Voir →';
-    background: var(--color-white);
-    color: var(--color-black);
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px;
+.overlay::after {
+    content: 'Voir le projet';
+    color: var(--color-white);
+    font-family: var(--font-afro-modern);
     font-weight: 700;
-    transform: scale(0);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 1rem 2rem;
+    border: 1px solid var(--color-white);
+    background: rgba(0,0,0,0.5);
+    border-radius: 30px;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s ease;
 }
 
 .project-item:hover .overlay::after {
-    transform: scale(1);
+    transform: translateY(0);
+    opacity: 1;
 }
 
-.project-info h4 {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 1.4rem;
-    margin: 0;
-    transition: color 0.3s;
+.project-item:hover .project-img img {
+    transform: scale(1.05);
+    transition: transform 0.6s ease;
 }
 
-.project-item:hover .project-info h4 {
-    color: var(--color-gold);
+.project-img img {
+    transition: transform 0.6s ease;
 }
 
-.project-info p {
-    font-size: 0.9rem;
-    color: var(--color-gray);
-    margin: 0;
+.project-item:hover {
+    cursor: pointer;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.15); /* Plus d'ombre au survol */
 }
 
 /* --- CONTACT (Minimal) --- */
@@ -930,6 +966,7 @@ ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4rem;
+    justify-items: center; /* Centre les cartes dans la grille */
 }
 
 @media (max-width: 900px) {
@@ -941,6 +978,9 @@ ul {
     text-align: center;
     opacity: 1;
     transition: transform 0.3s ease;
+    max-width: 350px; /* Limite la largeur pour éviter l'effet géant */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .founder-card:hover {
@@ -953,13 +993,21 @@ ul {
 
 .founder-img {
     width: 100%;
-    aspect-ratio: 3/4;
+    /* aspect-ratio: 3/4; Supprimé */
+    height: 450px; /* Hauteur fixe pour uniformiser */
     overflow: hidden;
     margin-bottom: 2rem;
     filter: grayscale(100%);
     transition: all 0.5s ease;
     border-radius: 100px 100px 0 0; /* Forme arche fun */
     position: relative;
+}
+
+.founder-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top; /* Focus sur le visage */
 }
 
 /* Effet couleur + ombre portée au survol */
