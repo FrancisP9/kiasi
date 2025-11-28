@@ -583,15 +583,20 @@ ul {
 
 .manifesto-text {
     font-family: 'Manrope', sans-serif;
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 500;
     line-height: 1.4;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
+    color: var(--color-black);
 }
 
-.manifesto-text span {
+/* On remet les spans spécifiques (serif et doré) */
+.manifesto-text .serif {
+    font-family: var(--font-display);
+    font-style: italic;
     color: var(--color-gold);
+    font-weight: 400;
 }
 
 /* --- EXPERTISE SECTION (Editorial List) --- */

@@ -381,8 +381,72 @@ function initDynamicText() {
 }
 
 function initSectionAnimations() {
-    // Animations désactivées pour l'instant pour garantir l'affichage
     console.log("Sections ready");
+
+    // 1. MANIFESTO : Advanced Scroll Reveal (Blur + Opacity + Rotation)
+    const manifestoText = document.querySelector(".manifesto-text");
+    if(manifestoText) {
+        // 1. Split Text manually into words
+        const textContent = manifestoText.innerText; // Get pure text
+        const words = textContent.split(/(\s+)/); // Split keeping spaces
+        
+        manifestoText.innerHTML = ""; // Clear content
+        
+        words.forEach(word => {
+            if(word.match(/^\s+$/)) {
+                manifestoText.appendChild(document.createTextNode(word));
+            } else {
+                const span = document.createElement("span");
+                span.classList.add("word");
+                span.innerText = word;
+                
+                // RE-APPLY STYLE FOR KEYWORDS (Fix for lost spans)
+                if (word.includes("l'héritage") || word.includes("culturel") || word.includes("l'excellence") || word.includes("digitale")) {
+                    span.style.fontFamily = "'Playfair Display', serif";
+                    span.style.fontStyle = "italic";
+                    span.style.color = "#F5B75A"; // Gold
+                }
+
+                // Style initial pour animation
+                span.style.opacity = "0.2";
+                span.style.filter = "blur(4px)";
+                span.style.display = "inline-block";
+                span.style.willChange = "opacity, filter, transform";
+                manifestoText.appendChild(span);
+            }
+        });
+
+        // 2. Animate Words (Opacity + Blur)
+        const wordElements = manifestoText.querySelectorAll(".word");
+        
+        gsap.to(wordElements, {
+            scrollTrigger: {
+                trigger: manifestoText,
+                start: "top 80%",
+                end: "bottom 60%",
+                scrub: 1
+            },
+            opacity: 1,
+            filter: "blur(0px)",
+            stagger: 0.05,
+            ease: "none"
+        });
+
+        // 3. Animate Container Rotation (Subtle 3D feel)
+        gsap.fromTo(manifestoText, 
+            { rotation: 3, transformOrigin: "0% 50%" },
+            {
+                rotation: 0,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: manifestoText,
+                    start: "top bottom",
+                    end: "bottom bottom",
+                    scrub: 1
+                }
+            }
+        );
+    }
 }
 
 // Global Modal Functions
