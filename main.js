@@ -176,6 +176,9 @@ function onImagesLoaded() {
     // Pre-render the first frame of rotation so it's ready behind the video
     appState.currentFrame = 0;
     render();
+    
+    // Ensure canvas is hidden initially (behind video) or visible if video fails
+    gsap.set(canvas, { opacity: 0 }); // Hide canvas initially
 
     // Hide Preloader
     gsap.to("#preloader", {
@@ -190,18 +193,23 @@ function startVideoSequence() {
     // Accélérer la vidéo (1.5x = 50% plus rapide, 2.0 = 2x plus rapide)
     video.playbackRate = 2.0;
     
+    // Ensure video is visible
+    video.style.opacity = 1;
+    
     // Play Video
     video.play().then(() => {
         // Video playing
+        // Reveal canvas just before video ends to ensure seamless transition
     }).catch(err => {
         console.error("Video autoplay failed", err);
         // Fallback: Skip video, show canvas
+        gsap.set(canvas, { opacity: 1 });
+        video.style.opacity = 0;
         unlockScroll();
         initScrollSequence();
     });
 
     // Enhancement: CSS Filters for blur/darkness on video as requested
-    // "au début l’image est zoomée + floue + sombre" -> applied to video via GSAP
     gsap.set(video, { filter: "blur(10px) brightness(0.5) scale(1.1)" });
     
     // Clear up video filters
@@ -213,7 +221,10 @@ function startVideoSequence() {
 
     // Listen for video end
     video.addEventListener('ended', () => {
-        // Fade out video to reveal canvas (which is already displaying frame 0)
+        // Show canvas NOW
+        gsap.set(canvas, { opacity: 1 });
+        
+        // Fade out video to reveal canvas
         gsap.to(video, {
             opacity: 0,
             duration: 0.5,
@@ -295,39 +306,38 @@ function initScrollSequence() {
         target: window,
         type: "wheel,touch,pointer",
         tolerance: 10,
-        preventDefault: true, 
+        preventDefault: true,
+        // Sur mobile, touchmove vers le haut = scroll vers le bas. Observer gère ça normalement.
+        // Mais si c'est inversé, on peut ignorer le sens et utiliser deltaY.
+        onUp: () => {
+            if (!isAnimating && currentStep > 0) {
+                goToStep(currentStep - 1);
+            }
+        }, 
         onDown: () => {
             // Si on est à la fin (étape 4)
             if (currentStep === totalSteps) {
-                // STABILISATION : On ne déclenche la suite que si on scrolle vraiment
-                // (pour éviter les faux positifs ou les enchaînements trop rapides)
-                
-                // On n'a pas besoin de faire disparaitre le texte ici, 
-                // c'est le scroll natif de Lenis qui le fera disparaitre en montant le contenu par dessus.
-                
+                // Unlock sequence
                 observer.disable();
-                lenis.start();
-                // On retire l'auto-scroll qui faisait "sauter" le texte
-                // lenis.scrollTo("#services", { offset: -50, duration: 1.5 }); 
+                document.body.classList.remove('no-scroll'); // Ensure class removed
+                document.body.style.overflow = ''; // Reset inline style if any
                 
-                // On laisse l'utilisateur scroller naturellement pour découvrir la suite
+                // Start Lenis
+                lenis.start();
+                lenis.resize(); // Recalculate dimensions
+                
                 initSectionAnimations();
             }
             else if (!isAnimating && currentStep < totalSteps) {
                 goToStep(currentStep + 1);
             }
-        },
-        onUp: () => {
-            if (!isAnimating && currentStep > 0) {
-                goToStep(currentStep - 1);
-            }
         }
     });
 
     // On écoute le scroll Lenis pour réactiver le piège si on remonte tout en haut
-    lenis.on('scroll', ({ scroll }) => {
-        if (scroll <= 5 && currentStep === totalSteps) {
-            // Réactiver le piège si on est tout en haut
+    lenis.on('scroll', ({ scroll, velocity }) => {
+        // On ne réactive que si on remonte (velocity < 0) et qu'on est tout en haut
+        if (scroll <= 2 && velocity < 0 && currentStep === totalSteps) {
             observer.enable();
         }
     });
