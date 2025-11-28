@@ -216,8 +216,11 @@
           </div>
 
           <div class="works-gallery">
-            <!-- Project 1 -->
-            <article class="project-item">
+            <!-- Project 1: VIDEO MODAL -->
+            <article
+              class="project-item"
+              onclick="openVideoModal('/videos/robuesca.mp4')"
+            >
               <div class="project-img">
                 <div class="overlay"></div>
                 <img
@@ -233,12 +236,15 @@
               </div>
             </article>
 
-            <!-- Project 2 -->
-            <article class="project-item offset-top">
+            <!-- Project 2: LINK TO CMJ -->
+            <article
+              class="project-item offset-top"
+              onclick="window.open('https://cmjbeauty.com', '_blank')"
+            >
               <div class="project-img">
                 <div class="overlay"></div>
                 <img
-                  src="/images/cmj.jpg"
+                  src="/images/ellyon.jpg"
                   alt="CMJ Beauty Project"
                   class="placeholder-img"
                   style="object-fit: cover"
@@ -250,25 +256,38 @@
               </div>
             </article>
 
-            <!-- Project 3 -->
-            <article class="project-item">
+            <!-- Project 3: LINK TO INSTAGRAM -->
+            <article
+              class="project-item"
+              onclick="window.open('https://www.instagram.com/ellyonandco?igsh=NGRwcHh0aHJiamJ6', '_blank')"
+            >
               <div class="project-img">
                 <div class="overlay"></div>
                 <img
-                  src="/images/ellyon.jpg"
-                  alt="Elly & Co Project"
+                  src="/images/cmj.jpg"
+                  alt="Ellyon & Co Project"
                   class="placeholder-img"
                   style="object-fit: cover"
                 />
               </div>
               <div class="project-info">
-                <h4>Elly & Co</h4>
+                <h4>Ellyon & Co</h4>
                 <p>Visual Identity</p>
               </div>
             </article>
           </div>
         </div>
       </section>
+
+      <!-- VIDEO MODAL (Hidden by default) -->
+      <div id="video-modal" class="video-modal" onclick="closeVideoModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+          <video id="modal-video" controls>
+            <source src="" type="video/mp4" />
+          </video>
+          <button class="close-modal" onclick="closeVideoModal()">×</button>
+        </div>
+      </div>
 
       <!-- SECTION: FOUNDERS (Editorial Portraits) -->
       <section id="founders" class="section-padding">

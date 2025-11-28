@@ -2,55 +2,60 @@
 
 /* --- FOUNDERS SECTION --- */
 .founders-header {
-    display: flex;
-    align-items: flex-end;
-    gap: 4rem;
-    margin-bottom: 6rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 4rem;
+  margin-bottom: 6rem;
 }
 
 .founders-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4rem;
 }
 
 @media (max-width: 900px) {
-    .founders-grid { grid-template-columns: 1fr; gap: 4rem; }
-    .founder-card.offset-down { margin-top: 0; }
+  .founders-grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  .founder-card.offset-down {
+    margin-top: 0;
+  }
 }
 
 .founder-card {
-    text-align: center;
+  text-align: center;
 }
 
 .founder-card.offset-down {
-    margin-top: 8rem; /* Decalage pour effet rythmé */
+  margin-top: 8rem; /* Decalage pour effet rythmé */
 }
 
 .founder-img {
-    width: 100%;
-    aspect-ratio: 3/4;
-    overflow: hidden;
-    margin-bottom: 2rem;
-    filter: grayscale(100%); /* Noir et blanc élégant */
-    transition: filter 0.5s ease;
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  filter: grayscale(100%); /* Noir et blanc élégant */
+  transition: filter 0.5s ease;
 }
 
 .founder-card:hover .founder-img {
-    filter: grayscale(0%); /* Couleur au survol */
+  filter: grayscale(0%); /* Couleur au survol */
 }
 
 .founder-info h3 {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 1.8rem;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
+  font-family: "Tenor Sans", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
 }
 
 .founder-info .role {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--color-gray);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-gray);
 }

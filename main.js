@@ -364,5 +364,28 @@ function initSectionAnimations() {
     console.log("Sections ready");
 }
 
+// Global Modal Functions
+window.openVideoModal = function(src) {
+    const modal = document.getElementById("video-modal");
+    const video = document.getElementById("modal-video");
+    
+    if (modal && video) {
+        video.src = src;
+        modal.classList.add("active");
+        video.play();
+    }
+}
+
+window.closeVideoModal = function() {
+    const modal = document.getElementById("video-modal");
+    const video = document.getElementById("modal-video");
+    
+    if (modal && video) {
+        modal.classList.remove("active");
+        video.pause();
+        video.currentTime = 0;
+    }
+}
+
 // Start
 window.addEventListener('load', preloadImages);
