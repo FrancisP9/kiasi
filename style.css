@@ -387,14 +387,31 @@ ul {
     opacity: 0; /* Hidden by default */
 }
 
-/* Zoom Layer Text */
-.zoom-layer h2 {
+/* Welcome Layer */
+.welcome-layer {
+    z-index: 15; /* Au-dessus du canvas, sous le final layer */
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.welcome-title {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
     color: var(--color-white);
-    font-size: clamp(2rem, 5vw, 4rem);
-    text-align: center;
-    max-width: 800px;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.welcome-subtitle {
+    font-family: var(--font-main);
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    animation: bounce 2s infinite;
 }
 
 /* Rotate Layer Text Minimalist */

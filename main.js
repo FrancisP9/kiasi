@@ -231,7 +231,8 @@ function startVideoSequence() {
             onComplete: () => {
                 video.style.display = 'none'; // Remove from DOM flow if needed, or just keep hidden
                 
-                // Main content is now visible by default
+                // Show Welcome Text
+                gsap.to("#welcome-text", { opacity: 1, duration: 1, ease: "power2.out" });
                 
                 unlockScroll();
                 initScrollSequence();
@@ -288,6 +289,15 @@ function initScrollSequence() {
         // Hide all first
         gsap.to(".hero-overlay", { opacity: 0, duration: 0.5 });
         
+        // Hide Welcome Text explicitly on first move
+        if (index > 0) {
+            gsap.to("#welcome-text", { opacity: 0, duration: 0.5 });
+        } else {
+            // If we go back to step 0, show welcome text again?
+            // Yes, let's show it again if we scroll back up to the very start
+            gsap.to("#welcome-text", { opacity: 1, duration: 0.5, delay: 0.5 });
+        }
+        
         if (index === 1) {
             gsap.to("#rotate-text-1", { opacity: 1, duration: 0.8, delay: 0.3 });
         } else if (index === 2) {
@@ -307,29 +317,30 @@ function initScrollSequence() {
         type: "wheel,touch,pointer",
         tolerance: 10,
         preventDefault: true,
-        // Sur mobile, touchmove vers le haut = scroll vers le bas. Observer gère ça normalement.
-        // Mais si c'est inversé, on peut ignorer le sens et utiliser deltaY.
-        onUp: () => {
-            if (!isAnimating && currentStep > 0) {
-                goToStep(currentStep - 1);
-            }
-        }, 
-        onDown: () => {
-            // Si on est à la fin (étape 4)
-            if (currentStep === totalSteps) {
-                // Unlock sequence
-                observer.disable();
-                document.body.classList.remove('no-scroll'); // Ensure class removed
-                document.body.style.overflow = ''; // Reset inline style if any
-                
-                // Start Lenis
-                lenis.start();
-                lenis.resize(); // Recalculate dimensions
-                
-                initSectionAnimations();
-            }
-            else if (!isAnimating && currentStep < totalSteps) {
-                goToStep(currentStep + 1);
+        onChange: (self) => {
+            // self.deltaY > 0 : Scroll vers le BAS (Molette bas ou Doigt haut)
+            // self.deltaY < 0 : Scroll vers le HAUT (Molette haut ou Doigt bas)
+            
+            const isScrollingDown = self.deltaY > 0;
+            
+            if (isScrollingDown) {
+                // NEXT STEP
+                if (currentStep === totalSteps) {
+                    observer.disable();
+                    document.body.classList.remove('no-scroll'); 
+                    document.body.style.overflow = '';
+                    lenis.start();
+                    lenis.resize();
+                    initSectionAnimations();
+                }
+                else if (!isAnimating && currentStep < totalSteps) {
+                    goToStep(currentStep + 1);
+                }
+            } else {
+                // PREV STEP
+                if (!isAnimating && currentStep > 0) {
+                    goToStep(currentStep - 1);
+                }
             }
         }
     });

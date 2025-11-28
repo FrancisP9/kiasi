@@ -85,14 +85,28 @@
       </div>
     </div>
 
-      <!-- HERO SECTION (PINNED) -->
-      <section id="hero-sequence">
-        <!-- Intro Video with poster to prevent flash -->
-        <video id="intro-video" muted playsinline preload="auto" poster="/frames/zoom/zoom-0001.webp">
-          <source src="videos/zoom.mp4" type="video/mp4" />
-        </video>
+    <!-- HERO SECTION (PINNED) -->
+    <section id="hero-sequence">
+      <!-- Intro Video with poster to prevent flash -->
+      <video
+        id="intro-video"
+        muted
+        playsinline
+        preload="auto"
+        poster="/frames/zoom/zoom-0001.webp"
+      >
+        <source src="videos/zoom.mp4" type="video/mp4" />
+      </video>
 
       <canvas id="hero-canvas"></canvas>
+
+      <!-- Welcome Text (Appears after video) -->
+      <div class="hero-overlay welcome-layer" id="welcome-text">
+        <h2 class="welcome-title">
+          Bienvenue chez <span class="gold">Kiasi&Co</span>
+        </h2>
+        <p class="welcome-subtitle">Scroll pour découvrir</p>
+      </div>
 
       <!-- Overlay Layers for Rotate Scroll -->
       <div class="hero-overlay rotate-layer" id="rotate-text-1">
